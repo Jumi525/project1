@@ -41,7 +41,7 @@ const NavLink = ({ props }: NavLinkProps) => {
           key={index}
           href={nav.href}
           id={nav.href}
-          className=" py-3 hover:bg-green-800/50 md:hover:bg-transparent text-red-800 md:text-[#EAD494] md:hover:text-green-800/95"
+          className=" py-3 hover:bg-gray-500 md:hover:bg-transparent text-gray-900 md:text-[#EAD494] md:hover:text-green-800/95"
         >
           {nav.link}
         </Link>

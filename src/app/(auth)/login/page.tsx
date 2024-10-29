@@ -1,9 +1,43 @@
+"use client";
+import { useAppState } from "@/lib/provider/authProvider";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const Loginpage = () => {
+  const { state, dispatch } = useAppState();
+  const router = useRouter();
+  const email = useRef<HTMLInputElement>(null);
+  const passwords = useRef<HTMLInputElement>(null);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const name = email.current?.value as string;
+    const password = passwords.current?.value as string;
+    const user = {
+      name: name.split("@")[0],
+      location: "",
+      Time: "",
+      Title: "",
+      Revenue: "",
+      Bookings: "",
+      Rating: "",
+      Feedback: "",
+      rating: "",
+      Gmail: name,
+      Password: password,
+      verified: false,
+    };
+    dispatch({ type: "ADD_USER", payload: user });
+    router.push("/signup");
+    console.log("login");
+    console.log(state);
+  };
+
   return (
-    <form className="bg-[#052620] rounded-lg text-[#EAD494] p-5 flex flex-col gap-3 w-full max-w-[500px]">
+    <form
+      className="bg-[#052620] rounded-lg text-[#EAD494] p-5 flex flex-col gap-3 w-full max-w-[500px]"
+      onSubmit={handleSubmit}
+    >
       <Link href="/" className="flex gap-2 items-center max-w-max">
         <svg
           version="1.0"
@@ -179,11 +213,13 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
       <input
         type="email"
         placeholder="Email"
+        ref={email}
         className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
       />
       <input
         type="password"
         placeholder="Password"
+        ref={passwords}
         className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
       />
       <button

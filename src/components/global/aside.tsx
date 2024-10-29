@@ -1,45 +1,65 @@
 import Link from "next/link";
 import React from "react";
-import { Facebook, Instagram, MousePointer2, Twitter } from "lucide-react";
+import {
+  BookCheck,
+  Captions,
+  CircleDollarSign,
+  LocateFixed,
+  Timer,
+  Users,
+} from "lucide-react";
 
-const footerLink1 = [
-  { href: "", link: "About us" },
-  { href: "", link: "Features" },
-  { href: "", link: "News" },
-  { href: "", link: "Menu" },
-];
-const footerLink2 = [
-  { href: "", link: "Why Us" },
-  { href: "", link: "Contact us" },
-  { href: "", link: "FAQ" },
-  { href: "", link: "Feedback" },
+const navlinks = [
+  {
+    href: "Apply",
+    link: <LocateFixed />,
+  },
+  {
+    href: "Jobs",
+    link: <BookCheck />,
+  },
+  {
+    href: "Revenue",
+    link: <CircleDollarSign />,
+  },
+  {
+    href: "Bookings",
+    link: <Captions />,
+  },
+  {
+    href: "Ratings",
+    link: <Users />,
+  },
+  {
+    href: "Feedback",
+    link: <Timer />,
+  },
 ];
 
-const Footer = () => {
+const Aside = () => {
   return (
-    <section className=" px-4 bg-[#9A845C]">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 pt-4 pb-8 mx-auto gap-6 md:gap-0">
-        <div className=" flex flex-col gap-4">
-          <svg
-            version="1.0"
-            xmlns="http://www.w3.org/2000/svg"
-            width="200.000000pt"
-            height="200.000000pt"
-            viewBox="0 0 200.000000 200.000000"
-            preserveAspectRatio="xMidYMid meet"
-            className="h-[80px] w-[80px]"
+    <section className="asidegrid bg-gray-400">
+      <Link href="/" className="flex gap-2 items-center max-w-max">
+        <svg
+          version="1.0"
+          xmlns="http://www.w3.org/2000/svg"
+          width="200.000000pt"
+          height="200.000000pt"
+          viewBox="0 0 200.000000 200.000000"
+          preserveAspectRatio="xMidYMid meet"
+          className="h-[80px] w-[80px]"
+        >
+          <metadata>
+            Created by potrace 1.10, written by Peter Selinger 2001-2011
+          </metadata>
+          <g
+            transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)"
+            fill="#000000"
+            stroke="none"
           >
-            <metadata>
-              Created by potrace 1.10, written by Peter Selinger 2001-2011
-            </metadata>
-            <g
-              transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)"
-              fill="#000000"
-              stroke="none"
-            >
-              <path
-                className="fill-[#EAD494]"
-                d="M974 1562 l-31 -47 -74 -5 c-72 -5 -77 -7 -129 -52 -30 -27 -64 -49
+            <path
+              className="fill-[#EAD494]"
+              d="M974 1562 l-31 -47 -74 -5 c-72 -5 -77 -7 -129 -52 -30 -27 -64 -49
 -75 -50 -35 -2 -69 3 -82 13 -9 8 -10 -3 -6 -45 6 -54 5 -56 -41 -107 -56 -63
 -61 -88 -6 -34 l40 39 0 -46 c0 -50 25 -122 40 -113 5 3 3 20 -6 40 -15 37
 -19 111 -6 119 5 3 18 -17 29 -44 18 -42 19 -52 7 -67 -15 -20 -18 -33 -6 -33
@@ -66,10 +86,10 @@ const Footer = () => {
 99 4z m109 -52 c3 -18 -1 -23 -15 -22 -10 1 -20 1 -23 0 -26 -9 -38 -6 -33 8
 17 48 65 57 71 14z m32 -106 c0 -25 -5 -57 -11 -73 l-11 -28 -14 28 c-14 26
 -14 33 3 73 10 24 21 44 26 44 4 0 7 -20 7 -44z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M944 1331 c-106 -13 -196 -77 -245 -172 -31 -63 -17 -56 27 12 46 72
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M944 1331 c-106 -13 -196 -77 -245 -172 -31 -63 -17 -56 27 12 46 72
 138 139 190 139 17 0 60 -46 70 -75 4 -11 15 -30 25 -43 10 -13 25 -48 34 -77
 l15 -54 26 26 c16 16 32 23 45 20 10 -3 19 -2 19 1 0 4 -18 51 -40 106 -23 54
 -39 100 -37 102 6 7 72 -16 111 -39 22 -12 57 -43 79 -69 l40 -47 -18 -28
@@ -80,15 +100,15 @@ c-10 -15 -24 -32 -32 -36 -18 -11 -17 -27 2 -27 12 0 15 -16 15 -84 0 -64 4
 -72 c8 -17 17 -38 19 -47 2 -10 6 -26 10 -37 7 -20 7 -20 -6 0 -7 11 -17 23
 -23 27 -6 4 -7 8 -3 8 5 0 -1 12 -12 26 -12 15 -21 33 -21 40 0 24 19 15 36
 -17z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M911 1201 c-37 -80 -38 -93 -10 -89 15 2 27 18 40 53 40 105 16 135
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M911 1201 c-37 -80 -38 -93 -10 -89 15 2 27 18 40 53 40 105 16 135
 -30 36z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M476 1160 c-13 -17 -37 -52 -51 -79 -26 -48 -28 -49 -66 -44 -43 6
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M476 1160 c-13 -17 -37 -52 -51 -79 -26 -48 -28 -49 -66 -44 -43 6
 -69 -8 -69 -38 0 -25 27 -24 42 1 14 21 48 28 48 9 0 -22 -72 -109 -96 -115
 -13 -3 -24 -10 -24 -15 0 -11 119 -9 126 2 3 5 -2 9 -10 9 -28 0 -28 20 0 68
 15 26 28 48 29 50 5 6 90 -30 97 -41 14 -22 9 -77 -7 -77 -16 0 -18 -8 -15
@@ -125,127 +145,84 @@ c-10 -15 -24 -32 -32 -36 -18 -11 -17 -27 2 -27 12 0 15 -16 15 -84 0 -64 4
 -23 0 -49 4 -59 8 -17 6 -17 8 2 29 11 12 26 32 32 45 10 19 15 21 33 11 12
 -6 44 -14 72 -18z m-216 -70 c-3 -30 -35 -41 -44 -16 -4 9 -1 27 6 41 11 19
 16 21 27 12 8 -6 13 -23 11 -37z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M964 1166 c-8 -21 3 -36 27 -36 15 0 20 6 17 22 -4 27 -35 37 -44 14z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M833 1128 c-12 -21 -27 -38 -33 -38 -5 0 -10 -4 -10 -10 0 -5 7 -10
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M964 1166 c-8 -21 3 -36 27 -36 15 0 20 6 17 22 -4 27 -35 37 -44 14z"
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M833 1128 c-12 -21 -27 -38 -33 -38 -5 0 -10 -4 -10 -10 0 -5 7 -10
 15 -10 12 0 15 -16 15 -83 0 -90 13 -117 57 -117 25 0 53 30 53 56 0 17 -2 17
 -19 -5 -12 -16 -24 -22 -35 -18 -13 5 -16 22 -16 87 l0 80 30 0 c17 0 30 5 30
 10 0 6 -13 10 -29 10 -27 0 -30 3 -33 38 l-3 37 -22 -37z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1489 1079 c-17 -14 -19 -19 -7 -15 11 3 19 -2 23 -15 5 -14 14 -19
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1489 1079 c-17 -14 -19 -19 -7 -15 11 3 19 -2 23 -15 5 -14 14 -19
 28 -17 28 4 35 38 11 55 -24 17 -28 17 -55 -8z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M945 1080 c-3 -5 1 -10 9 -10 13 0 16 -15 16 -90 0 -73 -3 -90 -15
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M945 1080 c-3 -5 1 -10 9 -10 13 0 16 -15 16 -90 0 -73 -3 -90 -15
 -90 -8 0 -15 -4 -15 -8 0 -5 23 -8 50 -8 28 0 50 3 50 8 0 4 -4 8 -10 8 -6 0
 -10 40 -10 100 l0 100 -34 0 c-19 0 -38 -4 -41 -10z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1098 1073 c-39 -46 -28 -82 34 -114 48 -24 59 -36 51 -56 -10 -27
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1098 1073 c-39 -46 -28 -82 34 -114 48 -24 59 -36 51 -56 -10 -27
 -65 -11 -90 26 l-23 34 0 -44 0 -44 41 -2 c51 -3 97 20 105 52 10 39 -2 54
 -56 78 -43 19 -50 26 -48 47 2 19 10 26 29 28 22 3 29 -3 40 -27 18 -40 29
 -39 29 2 0 33 -1 34 -48 36 -36 1 -53 -4 -64 -16z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1403 1083 c-10 -3 -9 -9 3 -21 13 -12 15 -32 12 -90 -2 -48 -8 -77
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1403 1083 c-10 -3 -9 -9 3 -21 13 -12 15 -32 12 -90 -2 -48 -8 -77
 -16 -80 -7 -2 -12 -7 -12 -10 0 -10 97 -9 106 1 4 4 -3 7 -15 7 -22 0 -23 3
 -21 83 3 118 3 117 -22 116 -13 0 -29 -3 -35 -6z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1570 1082 c0 -4 4 -12 8 -17 5 -6 26 -53 47 -106 l38 -97 -24 -43
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1570 1082 c0 -4 4 -12 8 -17 5 -6 26 -53 47 -106 l38 -97 -24 -43
 c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
 45 44 78 14 34 39 96 56 137 17 41 41 83 53 92 22 17 21 18 -26 18 -44 0 -46
 -1 -35 -20 10 -15 9 -29 -6 -72 -30 -84 -31 -85 -56 -16 -12 35 -25 69 -27 76
 -3 6 2 12 11 12 9 0 16 5 16 10 0 6 -20 10 -45 10 -25 0 -45 -4 -45 -8z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M775 880 c-11 -24 -31 -48 -48 -57 -26 -13 -28 -16 -14 -30 20 -21
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M775 880 c-11 -24 -31 -48 -48 -57 -26 -13 -28 -16 -14 -30 20 -21
 142 -29 173 -12 32 16 31 31 -1 23 -31 -8 -65 19 -65 50 -1 12 -6 31 -14 44
 -12 23 -13 23 -31 -18z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1201 880 c-13 -11 -34 -20 -48 -20 -14 0 -21 -4 -18 -10 10 -17 -4
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1201 880 c-13 -11 -34 -20 -48 -20 -14 0 -21 -4 -18 -10 10 -17 -4
 -47 -25 -53 -11 -3 -20 -10 -20 -15 0 -15 187 -7 206 8 19 17 18 27 -6 33 -10
 3 -27 21 -37 41 -19 42 -20 42 -52 16z"
-              />
-              <path
-                className="fill-[#EAD494]"
-                d="M1245 760 c-12 -19 -118 -67 -177 -80 -74 -17 -158 -1 -245 46 -34
+            />
+            <path
+              className="fill-[#EAD494]"
+              d="M1245 760 c-12 -19 -118 -67 -177 -80 -74 -17 -158 -1 -245 46 -34
 18 -60 27 -57 20 3 -8 38 -29 77 -47 66 -31 80 -34 167 -34 87 0 100 3 155 32
 73 38 102 59 93 68 -3 3 -9 1 -13 -5z"
-              />
-            </g>
-          </svg>
-          <p className="max-w-[300px] sm:max-w-[250px]">
-            We always makes our customer happy by providing as many chances as
-            possible
-          </p>
-          <div className="flex gap-2">
-            <span className=" rounded-full p-2 bg-red-700/15 hover:bg-[#052620]/40">
-              <Twitter />
-            </span>
-            <span className="hover:bg-[#052620]/40 bg-red-700/15 rounded-full p-2">
-              <Instagram />
-            </span>
-            <span className="hover:bg-[#052620]/40 bg-red-700/15 rounded-full p-2">
-              <Facebook />
-            </span>
-          </div>
-        </div>
-        <ul className="flex flex-col gap-[1px] sm:pl-4">
-          <p className="font-bold pb-1">About</p>
-          {footerLink1.map((footer, index) => (
-            <Link key={index} href={footer.href}>
-              {footer.link}
-            </Link>
-          ))}
-        </ul>
-        <ul className="flex flex-col gap-[1px]">
-          <p className="font-bold pb-1">Company</p>
-          {footerLink2.map((footer, index) => (
-            <Link key={index} href={footer.href}>
-              {footer.link}
-            </Link>
-          ))}
-        </ul>
-        <div>
-          <p className="font-bold">Get in Touch</p>
-          <p className="py-2">
-            Question or Feedback? we will love to hear from you ❤️
-          </p>
-          <div className=" outline-none rounded-full border-2 border-[#052620] max-w-max py-1 pl-4 pr-1 gap-2 flex items-center">
-            <input className="outline-none bg-transparent min-w-11" />
-            <button className="rounded-full p-1 bg-[#052620]/80">
-              <MousePointer2 />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-[#052620]/40 gap-2 flex flex-col sm:flex-row text-sm py-3 justify-center items-center sm:justify-start">
-        <span>
-          @Copyright 2024 made by{" "}
-          <span className="text-[#EAD494]">Artistry</span>
-        </span>
-        <div className="sm:ml-auto flex items-center gap-6  max-w-max">
-          <p>Terms and condition</p>
-          <p>privacy and policy</p>
-        </div>
-      </div>
+            />
+          </g>
+        </svg>
+      </Link>
+      <ul className="flex flex-col gap-2 mt-3 justify-center items-center ">
+        {navlinks.map((nav, index) => (
+          <button
+            key={index}
+            className="rounded-lg p-3 w-full flex max-w-max sm:max-w-full hover:bg-gray-500 text-gray-900"
+          >
+            {nav.link}
+            <p className="hidden sm:block pl-3">{nav.href}</p>
+          </button>
+        ))}
+      </ul>
     </section>
   );
 };
 
-export default Footer;
+export default Aside;

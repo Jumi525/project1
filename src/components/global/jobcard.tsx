@@ -1,4 +1,5 @@
-import { ArrowDownUp, LucideMove, Timer, X } from "lucide-react";
+"use client";
+import { ArrowDownUp, Bookmark, Timer, X } from "lucide-react";
 import React from "react";
 import {
   AlertDialog,
@@ -30,7 +31,7 @@ const Jobcard = ({
   title,
 }: JobcardProps) => {
   return (
-    <section className="scroll-child bg-[#9A8499] w-[280px] flex flex-col gap-1 p-3 rounded-lg">
+    <section className="scroll-child hover:bg-slate-500 bg-slate-500/50 w-[280px] md:w-[230px] md:h-[240px] flex flex-col gap-1 p-3 rounded-lg">
       <p className="font-bold">
         ${price}
         <span className="text-sm">/month</span>
@@ -45,7 +46,7 @@ const Jobcard = ({
         <Timer />
         {date}
       </p>
-      <div className="border-solid border-2 border-green-950 max-w-max px-2 py-[2px] rounded-full">
+      <div className="border-solid border-2 border-[#052620] max-w-max px-2 py-[2px] rounded-full">
         {time}{" "}
       </div>
       <div className="flex gap-2 items-center ">
@@ -82,7 +83,7 @@ const Jobcard = ({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <LucideMove className="border-solid border-2 border-green-950 h-[37px] w-[37px] rounded-lg" />
+        <Bookmark className="border-solid border-2 border-[#9A845C] h-[37px] w-[37px] p-1 rounded-lg hover:fill-black" />
       </div>
     </section>
   );

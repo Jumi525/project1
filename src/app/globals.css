@@ -174,6 +174,12 @@ body {
   .gridchild3 {
     grid-column: 2 / 3;
   }
+  .filterIcon {
+    display: none;
+  }
+  .authorIcon {
+    display: block;
+  }
 }
 
 @media (min-width: 768px) {
@@ -206,9 +212,77 @@ body {
   scroll-snap-type: y mandatory;
   width: 100%;
   max-width: 945px;
-  margin-inline: auto;
 }
 
 .scrollchild {
   scroll-snap-align: start;
+}
+
+.verticalscroll {
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  /* margin-left: 15px; */
+}
+.verticalchild {
+  scroll-snap-align: start;
+  margin-bottom: 10px;
+}
+
+.verticalscroll::-webkit-scrollbar {
+  height: 10px;
+}
+
+.verticalscroll::-webkit-scrollbar-button {
+  width: 10%;
+}
+
+.verticalscroll::-webkit-scrollbar-track {
+  background: whitesmoke;
+}
+.verticalscroll::-webkit-scrollbar-thumb {
+  background: rgba(5, 38, 32, 0.6);
+  border-radius: 20px;
+}
+.verticalscroll::-webkit-scrollbar-thumb:hover {
+  background: #052620;
+}
+
+@media (max-width: 360px) {
+  .verticalchild {
+    width: calc(100% + 30px);
+    height: 190px;
+  }
+}
+
+@media (min-width: 800px) {
+  .verticalscroll::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+}
+
+.dashboardgrid {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+}
+.asidegrid {
+  width: 60px;
+}
+
+@media (min-width: 640px) {
+  .dashboardgrid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+  }
+  .asidegrid {
+    width: 180px;
+  }
+}
+
+@media (min-width: 376px) {
+  .cardgrid {
+    grid-template-columns: 1fr 1fr;
+    padding-inline: 0;
+  }
 }

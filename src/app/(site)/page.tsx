@@ -3,27 +3,31 @@ import React from "react";
 import banner from "../../../public/asset/hero-banner.png";
 import vid from "../../../public/asset/tag1.png";
 import Card from "@/components/global/card";
-import product from "../../../public/asset/blog-1 (3).jpg";
+import maryam from "../../../public/asset/tag7.png";
+import rahman from "../../../public/asset/tag8.png";
+import mmenyene from "../../../public/asset/tag9.png";
 import trainer from "../../../public/asset/about-banner (2).png";
 import dentist from "../../../public/asset/about-banner.png";
 import doctor from "../../../public/asset/doctor-1.png";
 import design from "../../../public/asset/recent-post-1.jpg";
 import Link from "next/link";
+import TeamCard from "@/components/landingPage/teamCard";
 
 const Cardsdes = [
   {
-    image: product,
-    heading: "Product Design",
-    descrip: "Writing the specification and road map",
+    image: maryam,
+    heading: "maryam",
+    descrip:
+      "I have been using this website for a while and they have never disappointted me",
   },
   {
-    image: product,
-    heading: "App development",
+    image: rahman,
+    heading: "Abdul rahman",
     descrip: "Bringin the application to life",
   },
   {
-    image: product,
-    heading: "UI/UX design",
+    image: mmenyene,
+    heading: "mmenyene",
     descrip: "Designing the structure of the application",
   },
 ];
@@ -106,16 +110,16 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-      <section className="py-8">
-        <h2 className="text-center font-bold text-3xl md:text-4xl">Our Team</h2>
+      <section className="py-8 px-4">
+        <h2 className="text-center font-bold text-3xl md:text-4xl">FeedBack</h2>
         <p className="mx-auto text-center max-w-[450px] mt-3 mb-5 opacity-55">
           Use the section to describe your area of specialty and the product you
           offer. You could share and details and bonuses that comes with the
           business
         </p>
-        <div className="flex items-center justify-center gap-4 md:gap-8 flex-wrap px-3">
+        <div className="flex items-center gap-4 md:gap-8 px-3 verticalscroll">
           {Cardsdes.map((val, index) => (
-            <Card
+            <TeamCard
               key={index}
               heading={val.heading}
               image={val.image}

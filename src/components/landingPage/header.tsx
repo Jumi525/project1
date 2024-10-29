@@ -196,7 +196,7 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
           </SheetTrigger>
           <SheetContent
             side={"left"}
-            className="bg-[#9A845C] max-w-[280px] sm:max-w-[280px] md:hidden"
+            className="bg-gray-400 max-w-[280px] sm:max-w-[280px] md:hidden"
           >
             <SheetHeader>
               <SheetTitle>
