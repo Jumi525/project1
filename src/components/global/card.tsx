@@ -13,7 +13,7 @@ const Card = ({ description, heading, image }: CardProps) => {
         width={250}
         height={245}
         src={image}
-        className="rounded-3xl h-[15rem] object-cover"
+        className="rounded-3xl h-[15rem] w-[15rem] object-cover"
       />
       <h2 className="font-bold">{heading}</h2>
       <p className="text-sm opacity-60">{description}</p>

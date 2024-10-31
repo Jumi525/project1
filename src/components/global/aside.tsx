@@ -1,42 +1,107 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   BookCheck,
   Captions,
   CircleDollarSign,
   LocateFixed,
-  Timer,
+  Settings,
   Users,
+  X,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { v4 } from "uuid";
+import { addProfile, createjobs } from "@/lib/queries";
+import { jobprofile, Prof } from "@/lib/types";
+import Loader from "./loader";
 
 const navlinks = [
   {
-    href: "Apply",
-    link: <LocateFixed />,
-  },
-  {
-    href: "Jobs",
-    link: <BookCheck />,
-  },
-  {
-    href: "Revenue",
-    link: <CircleDollarSign />,
-  },
-  {
-    href: "Bookings",
-    link: <Captions />,
-  },
-  {
-    href: "Ratings",
+    href: "post",
+    name: "Post",
     link: <Users />,
   },
   {
-    href: "Feedback",
-    link: <Timer />,
+    href: "home",
+    name: "Home",
+    link: <LocateFixed />,
+  },
+  {
+    href: "recommended",
+    name: "Recommended",
+    link: <BookCheck />,
+  },
+  {
+    href: "revenue",
+    name: "Revenue",
+    link: <CircleDollarSign />,
+  },
+  {
+    href: "bookings",
+    name: "Bookings",
+    link: <Captions />,
+  },
+  {
+    href: "profile",
+    name: "Profile",
+    link: <Settings />,
   },
 ];
 
 const Aside = () => {
+  const email = "jumiklein525@gmail.com";
+  const user = "ahmed najmudeen";
+  const jobTitle = useRef<HTMLSelectElement>(null);
+  const jobPay = useRef<HTMLInputElement>(null);
+  const jobLocation = useRef<HTMLInputElement>(null);
+  const jobfulltime = useRef<HTMLSelectElement>(null);
+  const jobDescrip = useRef<HTMLTextAreaElement>(null);
+
+  const profileTitle = useRef<HTMLInputElement>(null);
+  const profileFirstname = useRef<HTMLInputElement>(null);
+  const profileLocation = useRef<HTMLInputElement>(null);
+  const profileLastname = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const verified = "true";
+    const jobprofile: jobprofile = {
+      id: v4(),
+      date: new Date().toISOString(),
+      location: jobLocation.current?.value || "",
+      price: jobPay.current?.value || "",
+      time: jobfulltime.current?.value || "",
+      title: jobTitle.current?.value || "",
+      name: user,
+    };
+    await createjobs(verified, jobprofile);
+    setLoading(false);
+  };
+  const handleprofileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const userProfile = {
+      fullName: `${profileFirstname.current?.value} ${profileLastname.current?.value}`,
+      title: profileTitle.current?.value,
+      location: profileLocation.current?.value,
+      verified: "true",
+    } as Partial<Prof>;
+    const response = await addProfile(email, userProfile);
+    setLoading(false);
+    if (response?.error) return;
+  };
   return (
     <section className="asidegrid bg-gray-400">
       <Link href="/" className="flex gap-2 items-center max-w-max">
@@ -211,15 +276,132 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
         </svg>
       </Link>
       <ul className="flex flex-col gap-2 mt-3 justify-center items-center ">
-        {navlinks.map((nav, index) => (
-          <button
-            key={index}
-            className="rounded-lg p-3 w-full flex max-w-max sm:max-w-full hover:bg-gray-500 text-gray-900"
-          >
-            {nav.link}
-            <p className="hidden sm:block pl-3">{nav.href}</p>
-          </button>
-        ))}
+        {navlinks.map((nav, index) =>
+          nav.name === "Post" || nav.name === "Profile" ? (
+            nav.name === "Post" ? (
+              <AlertDialog key={index}>
+                <AlertDialogTrigger className="rounded-lg p-3 flex w-full max-w-max sm:max-w-full hover:bg-gray-500 text-gray-900">
+                  {nav.link}
+                  <p className="hidden sm:block pl-3">{nav.name}</p>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="max-w-[400px] sm:w-[500px]">
+                  <AlertDialogHeader className=" relative">
+                    <AlertDialogTitle>{`${nav.name} job`}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-2"
+                      >
+                        <select ref={jobTitle} className="pl-2 py-2 rounded-md">
+                          <option>Electrican</option>
+                          <option>Plumber</option>
+                          <option>Cleaner</option>
+                          <option>dry cleaner</option>
+                          <option>House Help</option>
+                        </select>
+                        <input
+                          placeholder="pay"
+                          type="number"
+                          ref={jobPay}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+                        <input
+                          placeholder="Location"
+                          ref={jobLocation}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+                        <select
+                          ref={jobfulltime}
+                          className="w-full py-2 pl-2 rounded-md"
+                        >
+                          <option>fulltime</option>
+                          <option>parttime</option>
+                        </select>
+                        <textarea
+                          ref={jobDescrip}
+                          placeholder="Job Description"
+                          className="w-full h-24 py-2 pl-2 rounded-md"
+                        />
+
+                        <button
+                          type="submit"
+                          className="w-full py-2 rounded-md bg-black"
+                        >
+                          {loading ? <Loader /> : "Apply"}
+                        </button>
+                      </form>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="absolute top-0 right-2 sm:top-2 hover:border-red-700 border-solid border-2 px-2">
+                      <X />
+                    </AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <AlertDialog key={index}>
+                <AlertDialogTrigger className="rounded-lg p-3 flex w-full max-w-max sm:max-w-full hover:bg-gray-500 text-gray-900">
+                  {nav.link}
+                  <p className="hidden sm:block pl-3">{nav.name}</p>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="max-w-[400px] sm:w-[500px]">
+                  <AlertDialogHeader className=" relative">
+                    <AlertDialogTitle>{nav.name}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <form
+                        onSubmit={handleprofileSubmit}
+                        className="flex flex-col gap-2"
+                      >
+                        <input
+                          placeholder="FirstName"
+                          ref={profileFirstname}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+                        <input
+                          placeholder="LastName"
+                          ref={profileLastname}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+                        <input
+                          placeholder="Title"
+                          ref={profileTitle}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+                        <input
+                          placeholder="Location"
+                          ref={profileLocation}
+                          className="w-full py-2 pl-2 rounded-md"
+                        />
+
+                        <button
+                          type="submit"
+                          className="w-full py-2 rounded-md bg-black"
+                        >
+                          {loading ? <Loader /> : "Apply settings"}
+                        </button>
+                      </form>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="absolute top-0 right-2 sm:top-2 hover:border-red-700 border-solid border-2 px-2">
+                      <X />
+                    </AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )
+          ) : (
+            <Link
+              href={`/dashboard/${nav.href}`}
+              key={index}
+              className="rounded-lg p-3 w-full flex max-w-max sm:max-w-full hover:bg-gray-500 text-gray-900"
+            >
+              {nav.link}
+              <p className="hidden sm:block pl-3">{nav.name}</p>
+            </Link>
+          )
+        )}
       </ul>
     </section>
   );

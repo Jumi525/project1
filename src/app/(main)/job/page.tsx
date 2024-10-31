@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   AlignCenter,
   Captions,
@@ -30,73 +31,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
-
-const jobCards = [
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-  {
-    applicant: "58",
-    date: "5, september",
-    location: "Abuja",
-    price: "78000",
-    time: "fulltime",
-    title: "UX designer",
-  },
-];
+import { useAppState } from "@/lib/provider/authProvider";
+import { usePathname } from "next/navigation";
+import { profileJobs } from "@/lib/queries";
 
 const navlinks = [
   {
@@ -121,7 +58,38 @@ const navlinks = [
   },
 ];
 
+type ProfileProps = {
+  id: string;
+  title: string;
+  location: string;
+  date: string;
+  name: string;
+  price: string;
+  time: string;
+}[];
+
 const Jobpage = () => {
+  const [callForm, setCallForm] = useState(false);
+  const { state, email } = useAppState();
+  const paths = usePathname();
+  const [profileJob, setprofileJobs] = useState<ProfileProps>([]);
+  const Email = "jimitech@gmail.com";
+
+  useMemo(async () => {
+    const userJob = await profileJobs(Email);
+    if (!userJob.length) return;
+    console.log(userJob);
+    setprofileJobs(userJob);
+  }, [paths.startsWith("/job")]);
+
+  useMemo(() => {
+    state.users.map((val) => {
+      if (val?.email === email)
+        if (val.verified === "true") return;
+        else setCallForm(true);
+      return;
+    });
+  }, [state]);
   return (
     <main className="gridmain bg-[#9A8499]/50">
       <section className="bg-[#052620] py-4 items-center gap-2 flex justify-between px-[16px] gridchild1">
@@ -345,22 +313,24 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
             </PopoverContent>
           </Popover>
 
-          <Link href={"/dashboard"}>
+          <Link href={"/dashboard/home"}>
             <HomeIcon className="h-[35px] w-[35px] p-2 bg-[#EAD494]/90  rounded-full" />
           </Link>
         </div>
       </section>
       <Panel />
       <section className="gridchild3 has-scroll">
-        {jobCards.map((val, index) => (
+        {profileJob.map((val, index) => (
           <Jobcard
             key={index}
-            applicant={val.applicant}
-            date={val.date}
+            applicant={"10"}
+            date={val.date ? val.date.toString().split("2024")[0] : ""}
             location={val.location}
             price={val.price}
             time={val.time}
             title={val.title}
+            callform={callForm}
+            email={email}
           />
         ))}
       </section>

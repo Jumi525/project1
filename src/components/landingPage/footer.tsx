@@ -17,9 +17,9 @@ const footerLink2 = [
 
 const Footer = () => {
   return (
-    <section className=" px-4 bg-[#9A845C]">
+    <section className=" px-4 bg-[#9A845C] transition-all">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 pt-4 pb-8 mx-auto gap-6 md:gap-0">
-        <div className=" flex flex-col gap-4">
+        <div id="contact" className=" flex flex-col gap-4">
           <svg
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +221,7 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
             </Link>
           ))}
         </ul>
-        <div>
+        <div id="feedback">
           <p className="font-bold">Get in Touch</p>
           <p className="py-2">
             Question or Feedback? we will love to hear from you ❤️

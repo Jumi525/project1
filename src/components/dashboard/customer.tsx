@@ -13,61 +13,73 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 
-const customerTable = [
-  {
-    id: "1",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "2",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "Ahmed Najmudeen",
-    date: "12/07/2024",
-    payment: "1200",
-    status: "active",
-  },
-];
+type customerCardProps = {
+  id: number;
+  name: string;
+  pay: string;
+  time: string;
+  date: string;
+};
 
-const Customer = () => {
+const Customer = ({ date, id, name, pay, time }: customerCardProps) => {
   return (
-    <section className="">
+    <AlertDialog>
+      <AlertDialogTrigger className=" w-full">
+        <section
+          key={id}
+          className="deGrid scrollchild  items-center text-center grid sm:grid-cols-[70px_1.5fr_1fr_1fr_150px] max-w-[945px] h-11 hover:bg-[#EAD494]/80"
+        >
+          <p>{id}</p>
+          <div className="flex items-center justify-center gap-2">
+            <Home />
+            <p>{name}</p>
+          </div>
+          <p className="block desecondG">{date}</p>
+          <p className="font-bold hidden sm:block">${pay}</p>
+          <span className="hidden sm:grid sm:place-content-center">
+            <p className="bg-red-500/40 hidden sm:block px-2 py-[2px] rounded-full">
+              {time}
+            </p>
+          </span>
+        </section>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="max-w-[400px] sm:w-[500px]">
+        <AlertDialogHeader className=" relative">
+          <AlertDialogTitle>{name}</AlertDialogTitle>
+          <AlertDialogDescription>
+            <div className="flex flex-col gap-2 text-left">
+              <p>{date}</p>
+              <p>{name}</p>
+              <p>${pay}</p>
+              <p className="bg-red-500/40 px-2 py-[2px] rounded-full max-w-max">
+                {time}
+              </p>
+              <div className="flex justify-start w-full items-center">
+                <Star className="hover:fill-yellow-400/90 hover:text-yellow-400/90 size-5" />
+                <Star className="hover:fill-yellow-400/90 hover:text-yellow-400/90" />
+                <Star className="hover:fill-yellow-400/90 hover:text-yellow-400/90" />
+                <Star className="hover:fill-yellow-400/90 hover:text-yellow-400/90" />
+                <Star className="hover:fill-yellow-400/90 hover:text-yellow-400/90" />
+              </div>
+              <input type="text" placeholder="Feedback" className="pl-1 py-2" />
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="absolute top-0 right-2 sm:top-2 hover:border-red-700 border-solid border-2 px-2">
+            <X />
+          </AlertDialogCancel>
+          <AlertDialogAction>Apply</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default Customer;
+
+{
+  /* <section className="">
       <section className="deGrid items-center rounded-lg mx-auto text-center mb-4 grid sm:grid-cols-[70px_1.5fr_1fr_1fr_150px] max-w-[945px] bg-[#052620]/50 h-11">
         <p>Id</p>
         <p>Name</p>
@@ -134,8 +146,5 @@ const Customer = () => {
           </AlertDialog>
         ))}
       </section>
-    </section>
-  );
-};
-
-export default Customer;
+    </section> */
+}

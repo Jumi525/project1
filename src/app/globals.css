@@ -118,6 +118,7 @@ body {
   flex-wrap: wrap;
   padding-inline: 16px;
   margin-top: 16px;
+  padding-bottom: 16px;
 }
 
 /* .scrolls::-webkit-scrollbar:: */
@@ -240,7 +241,7 @@ body {
 }
 
 .verticalscroll::-webkit-scrollbar-track {
-  background: whitesmoke;
+  background: transparent;
 }
 .verticalscroll::-webkit-scrollbar-thumb {
   background: rgba(5, 38, 32, 0.6);
@@ -260,6 +261,13 @@ body {
 @media (min-width: 800px) {
   .verticalscroll::-webkit-scrollbar-thumb {
     background: transparent;
+  }
+  .verticalscroll::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
+  .verticalscroll::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 20px;
   }
 }
 
@@ -285,5 +293,16 @@ body {
   .cardgrid {
     grid-template-columns: 1fr 1fr;
     padding-inline: 0;
+  }
+}
+
+@media (min-width: 462px) {
+  .recommendedcard {
+    grid-template-columns: 1fr 1fr;
+    padding-inline: 0;
+  }
+  .recommedgrid {
+    max-height: 150px;
+    max-width: 280px;
   }
 }

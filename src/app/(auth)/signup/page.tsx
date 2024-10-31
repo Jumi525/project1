@@ -1,41 +1,81 @@
 "use client";
-import { useAppState } from "@/lib/provider/authProvider";
 import Link from "next/link";
-import React, { useRef } from "react";
-import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import clsx from "clsx";
+import { useForm } from "react-hook-form";
+import { FormSchema, Prof, SignUpFormSchema } from "@/lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { MailCheck } from "lucide-react";
+import { v4 } from "uuid";
+import { actionSignUpUser } from "@/lib/queries";
 
 const SignUppage = () => {
-  const { state, dispatch } = useAppState();
-  const router = useRouter();
-  const email = useRef<HTMLInputElement>(null);
-  const passwords = useRef<HTMLInputElement>(null);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const name = email.current?.value as string;
-    const password = passwords.current?.value as string;
-    if (name === state.users[0].Gmail) {
-      const user = {
-        name: name.split("@")[0],
-        location: "",
-        Time: "",
-        Title: "",
-        Revenue: "",
-        Bookings: "",
-        Rating: "",
-        Feedback: "",
-        rating: "",
-        Gmail: name,
-        Password: password,
-        verified: true,
-      };
-      dispatch({ type: "ADD_USER", payload: user });
-      router.push("/job");
+  const searchParams = useSearchParams();
+  const [submitError, setSubmitError] = useState("");
+  const [confirmation, setConfirmation] = useState(false);
+
+  const codeExchangeError = useMemo(() => {
+    if (!searchParams) return "";
+    return searchParams.get("error_description");
+  }, [searchParams]);
+
+  const confirmationAndErrorStyles = useMemo(
+    () =>
+      clsx("bg-[#9A8499]/20", {
+        "bg-red-500/10": codeExchangeError,
+        "border-red-500/50": codeExchangeError,
+        "text-red-700": codeExchangeError,
+      }),
+    [codeExchangeError]
+  );
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof SignUpFormSchema>>({
+    mode: "onChange",
+    resolver: zodResolver(SignUpFormSchema),
+    defaultValues: { email: "", password: "", confirmPassword: "" },
+  });
+
+  const onSubmit = async ({ email, password }: z.infer<typeof FormSchema>) => {
+    const user = {
+      id: v4(),
+      location: "",
+      email: email || "",
+      revenue: "",
+      booking: "",
+      feedback: "",
+      rating: "",
+      fullName: "",
+      password: password || "",
+      title: "",
+      verified: "false",
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+    } as Prof;
+
+    const { error } = await actionSignUpUser(user);
+    if (error) {
+      setSubmitError(error);
+      reset();
+      return;
     }
+    setConfirmation(true);
   };
+
   return (
     <form
-      onSubmit={handleSubmit}
       className="bg-[#052620] rounded-lg text-[#EAD494] p-5 flex flex-col gap-3 w-full max-w-[500px]"
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={() => {
+        if (submitError) setSubmitError("");
+      }}
     >
       <Link href="/" className="flex gap-2 items-center max-w-max">
         <svg
@@ -209,23 +249,42 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
         </svg>
       </Link>
       <p>All in one collaboration and Productivity platform</p>
-      <input
-        type="email"
-        placeholder="Email"
-        ref={email}
-        className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        ref={passwords}
-        className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
-      />
+      {!confirmation && !codeExchangeError && (
+        <>
+          <input
+            type="email"
+            placeholder="Email"
+            {...register("email", { required: true })}
+            className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
+          />
+          {errors && (
+            <p className="text-sm text-red-400">{errors.email?.message}</p>
+          )}
+
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password", { required: true })}
+            className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
+          />
+          {errors && (
+            <p className="text-sm text-red-400">{errors.password?.message}</p>
+          )}
+
+          <input
+            type="password"
+            placeholder="Comfirm Password"
+            {...register("confirmPassword", { required: true })}
+            className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
+          />
+          {errors && (
+            <p className="text-sm text-red-400">
+              {errors.confirmPassword?.message}
+            </p>
+          )}
+        </>
+      )}
+      {submitError && <p className="text-sm text-red-400">{submitError}</p>}
       <button
         type="submit"
         className="bg-[#9A8499]/20 py-1 rounded-md hover:bg-[#9A8499]/50"
@@ -238,6 +297,19 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
           Login
         </Link>
       </p>
+      {(confirmation || codeExchangeError) && (
+        <>
+          <Alert className={confirmationAndErrorStyles}>
+            {!codeExchangeError && <MailCheck className="h-4 w-4" />}
+            <AlertTitle>
+              {codeExchangeError ? "Invalid Link" : "Check your email."}
+            </AlertTitle>
+            <AlertDescription>
+              {codeExchangeError || "An email confirmation has been sent."}
+            </AlertDescription>
+          </Alert>
+        </>
+      )}
     </form>
   );
 };

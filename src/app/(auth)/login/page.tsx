@@ -1,42 +1,51 @@
 "use client";
-import { useAppState } from "@/lib/provider/authProvider";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
+import { FormSchema } from "@/lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { actionLoginUser } from "@/lib/queries";
+import { useAppState } from "@/lib/provider/authProvider";
 
 const Loginpage = () => {
-  const { state, dispatch } = useAppState();
+  const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const email = useRef<HTMLInputElement>(null);
-  const passwords = useRef<HTMLInputElement>(null);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const name = email.current?.value as string;
-    const password = passwords.current?.value as string;
-    const user = {
-      name: name.split("@")[0],
-      location: "",
-      Time: "",
-      Title: "",
-      Revenue: "",
-      Bookings: "",
-      Rating: "",
-      Feedback: "",
-      rating: "",
-      Gmail: name,
-      Password: password,
-      verified: false,
-    };
-    dispatch({ type: "ADD_USER", payload: user });
-    router.push("/signup");
-    console.log("login");
-    console.log(state);
+  const { dispatch, setEmail } = useAppState();
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof FormSchema>>({
+    mode: "onChange",
+    resolver: zodResolver(FormSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (
+    formData
+  ) => {
+    const { data, error } = await actionLoginUser(formData);
+    if (error) {
+      reset();
+      setSubmitError(error);
+      return;
+    }
+    router.replace("/job");
+    setEmail(data?.email || "");
+    if (data) dispatch({ type: "ADD_USER", payload: data });
   };
 
   return (
     <form
       className="bg-[#052620] rounded-lg text-[#EAD494] p-5 flex flex-col gap-3 w-full max-w-[500px]"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      onChange={() => {
+        if (submitError) setSubmitError("");
+      }}
     >
       <Link href="/" className="flex gap-2 items-center max-w-max">
         <svg
@@ -213,15 +222,23 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
       <input
         type="email"
         placeholder="Email"
-        ref={email}
+        {...register("email", { required: true })}
         className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
       />
+      {errors && (
+        <p className="text-sm text-red-400">{errors.email?.message}</p>
+      )}
+
       <input
         type="password"
         placeholder="Password"
-        ref={passwords}
+        {...register("password", { required: true })}
         className="py-1 pl-2 rounded-md bg-[#9A8499]/20 outline-[#EAD494]"
       />
+      {errors && (
+        <p className="text-sm text-red-400">{errors.password?.message}</p>
+      )}
+      {submitError && <p className="text-sm text-red-400">{submitError}</p>}
       <button
         type="submit"
         className="bg-[#9A8499]/20 py-1 rounded-md hover:bg-[#9A8499]/50"

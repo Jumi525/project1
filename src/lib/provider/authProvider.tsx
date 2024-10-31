@@ -1,18 +1,20 @@
 "use client";
-import { UserSchema } from "../schema";
 import {
   createContext,
   Dispatch,
+  SetStateAction,
   useContext,
   useEffect,
   useReducer,
+  useState,
 } from "react";
+import { Prof } from "../types";
 
-export type UserType = { users: UserSchema[] | [] };
+export type UserType = { users: Prof[] | [] };
 
 type Action = {
   type: "ADD_USER";
-  payload: UserSchema;
+  payload: Prof;
 };
 
 const initialState: UserType = { users: [] };
@@ -27,6 +29,9 @@ const userReducer = (
         ...state,
         users: [...state.users, action.payload],
       };
+
+    default:
+      return initialState;
   }
 };
 
@@ -34,6 +39,8 @@ const UserStateContext = createContext<
   | {
       state: UserType;
       dispatch: Dispatch<Action>;
+      setEmail: Dispatch<SetStateAction<string>>;
+      email: string;
     }
   | undefined
 >(undefined);
@@ -44,12 +51,13 @@ type UserStateproviderProps = {
 
 const UserStateProvider = ({ children }: UserStateproviderProps) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
+  const [email, setEmail] = useState("");
   useEffect(() => {
     console.log("App state change");
   }, [state]);
 
   return (
-    <UserStateContext.Provider value={{ state, dispatch }}>
+    <UserStateContext.Provider value={{ state, dispatch, setEmail, email }}>
       {children}
     </UserStateContext.Provider>
   );

@@ -14,7 +14,7 @@ import {
 
 const Header = () => {
   return (
-    <div className="bg-[#052620] items-center flex justify-between px-[16px]">
+    <div className="bg-[#052620] items-center flex justify-between px-[16px] transition-all">
       <Link href="/" className="flex gap-2 items-center">
         <svg
           version="1.0"

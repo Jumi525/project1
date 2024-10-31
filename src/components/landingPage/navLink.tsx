@@ -8,23 +8,23 @@ type NavLinkProps = {
 
 const navlinks = [
   {
-    href: "#Home",
+    href: "#home",
     link: "Home",
   },
   {
-    href: "#Jobs",
+    href: "#jobs",
     link: "Jobs",
   },
   {
-    href: "#Team",
-    link: "Team",
+    href: "#testimonial",
+    link: "Testimonial",
   },
   {
-    href: "#Contact",
+    href: "#contact",
     link: "Contact",
   },
   {
-    href: "#Feedback",
+    href: "#feedback",
     link: "Feedback",
   },
   {

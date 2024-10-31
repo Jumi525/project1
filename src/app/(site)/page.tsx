@@ -58,7 +58,10 @@ const Jobsdes = [
 const LandingPage = () => {
   return (
     <main className="min-h-[100vh] bg-[#9A8499]/50">
-      <section className=" gap-2 grid grid-cols-1 sm:grid-cols-2 sm:justify-around items-center px-4 py-8">
+      <section
+        id="home"
+        className=" gap-2 grid grid-cols-1 sm:grid-cols-2 sm:justify-around items-center px-4 py-8"
+      >
         <section className=" max-w-[500px] flex flex-col gap-3 py-3 justify-self-center">
           <Link
             href={"/job"}
@@ -75,20 +78,13 @@ const LandingPage = () => {
           </p>
           <button className="bg-[#9A845C] text-nowrap items-center p-1 pl-3 rounded-full flex gap-2 max-w-max">
             watch our story
-            <Image
-              src={vid}
-              alt="video"
-              width={35}
-              height={35}
-              objectFit="contain"
-            />
+            <Image src={vid} alt="video" width={35} height={35} />
           </button>
         </section>
         <Image
           src={banner}
           width={300}
           alt="banner"
-          objectFit="contain"
           className="w-full px-9 max-w-[400px] md:max-w-[500px] justify-self-center"
         ></Image>
       </section>
@@ -110,8 +106,10 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-      <section className="py-8 px-4">
-        <h2 className="text-center font-bold text-3xl md:text-4xl">FeedBack</h2>
+      <section id="testimonial" className="py-8 px-4">
+        <h2 className="text-center font-bold text-3xl md:text-4xl">
+          Testimonial
+        </h2>
         <p className="mx-auto text-center max-w-[450px] mt-3 mb-5 opacity-55">
           Use the section to describe your area of specialty and the product you
           offer. You could share and details and bonuses that comes with the
