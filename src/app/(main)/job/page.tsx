@@ -31,7 +31,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { profileJobs } from "@/lib/queries";
 import useLocalStorage from "@/components/global/locals";
 
@@ -70,7 +70,6 @@ type ProfileProps = {
 
 const Jobpage = () => {
   const [profile] = useLocalStorage("user");
-  const paths = usePathname();
   const [profileJob, setprofileJobs] = useState<ProfileProps>([]);
   const router = useRouter();
 
@@ -81,7 +80,7 @@ const Jobpage = () => {
     }
     const userJob = await profileJobs(profile?.email || "");
     setprofileJobs(userJob);
-  }, [paths.startsWith("/job")]);
+  }, [profile.email, router]);
 
   return (
     <main className="gridmain bg-[#9A8499]/50">
