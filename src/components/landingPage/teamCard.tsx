@@ -8,7 +8,7 @@ type TeamCardProps = {
 };
 const TeamCard = ({ description, heading, image }: TeamCardProps) => {
   return (
-    <section className="bg-[#9A8499]/20 w-[300px] verticalchild h-[180px] flex-shrink-0 px-2 flex flex-col items-center  py-4 gap-4 rounded-md ">
+    <section className="bg-[#9A8499]/20 w-[300px] verticalchild h-[180px] flex-shrink-0 px-2 flex flex-col items-center  py-4 gap-4 rounded-md mx-auto">
       <div className="flex items-center gap-2 w-full">
         <Image
           alt={heading}

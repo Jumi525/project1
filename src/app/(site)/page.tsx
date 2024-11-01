@@ -115,7 +115,7 @@ const LandingPage = () => {
           offer. You could share and details and bonuses that comes with the
           business
         </p>
-        <div className="flex items-center gap-4 md:gap-8 px-3 verticalscroll">
+        <div className="flex items-center gap-4 md:gap-8 px-3 verticalscroll mx-auto">
           {Cardsdes.map((val, index) => (
             <TeamCard
               key={index}

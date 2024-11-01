@@ -99,8 +99,7 @@ export const profileHome = async (
   return response;
 };
 
-export const profileJobs = async (userEmail: string) => {
-  if (!userEmail) return [];
+export const profileJobs = async () => {
   const response = await db.select().from(jobs);
   if (!response.length) return [];
   return response;

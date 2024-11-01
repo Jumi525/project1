@@ -71,11 +71,10 @@ type ProfileProps = {
 const Jobpage = () => {
   const [profile] = useLocalStorage<Profile | null>("user", null);
   const [profileJob, setprofileJobs] = useState<ProfileProps>([]);
-
   useMemo(async () => {
-    const userJob = await profileJobs(profile?.email || "");
+    const userJob = await profileJobs();
     setprofileJobs(userJob);
-  }, [profile?.email]);
+  }, [profile]);
 
   return (
     <main className="gridmain bg-[#9A8499]/50">

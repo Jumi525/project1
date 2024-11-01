@@ -32,7 +32,7 @@ const Dashboardpage = () => {
   const [recommended, setRecommended] = useState<RecommendedProps>([]);
   const [home, setHome] = useState<HomeProps>([]);
   const [profile] = useState({
-    application: "85",
+    application: "0",
   });
   const [myprofile] = useLocalStorage<Profile | null>("user", null);
 
@@ -73,12 +73,12 @@ const Dashboardpage = () => {
             <div className="grid grid-cols-1 cardgrid md:grid-cols-4 gap-3 justify-center px-2">
               <DashboardCard
                 title="Revenue"
-                heading={myprofile?.revenue || ""}
+                heading={myprofile?.revenue || "0"}
                 increase="+10%"
               />
               <DashboardCard
                 title="Bookings"
-                heading={myprofile?.booking || ""}
+                heading={myprofile?.booking || "0"}
                 increase="+34"
               />
               <DashboardCard
@@ -88,7 +88,7 @@ const Dashboardpage = () => {
               />
               <DashboardCard
                 title="Ratings"
-                heading={myprofile?.rating || ""}
+                heading={myprofile?.rating || "0"}
                 increase="Average Rating"
               />
             </div>
