@@ -13,7 +13,8 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { addProfile } from "@/lib/queries";
-import { Prof } from "@/lib/types";
+import { Prof, Profile } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 type JobcardProps = {
   price: string;
@@ -22,12 +23,11 @@ type JobcardProps = {
   location: string;
   date: string;
   time: string;
-  callform: boolean;
   email: string;
+  verified: string;
 };
 
 const Jobcard = ({
-  callform,
   applicant,
   date,
   location,
@@ -35,25 +35,35 @@ const Jobcard = ({
   time,
   title,
   email,
+  verified,
 }: JobcardProps) => {
   const firstName = useRef<HTMLInputElement>(null);
   const lastName = useRef<HTMLInputElement>(null);
   const titles = useRef<HTMLSelectElement>(null);
   const locations = useRef<HTMLInputElement>(null);
-  const verified = "true";
-  const [setSuccess] = useState(false);
+  const verify = "true";
+  const router = useRouter();
+  const [success, setSuccess] = useState(false);
+  const [user] = useState<Profile>(() => {
+    const savedData = localStorage.getItem("user");
+    return savedData ? JSON.parse(savedData) : {};
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSuccess(true);
     const userProfile = {
       fullName: `${firstName.current?.value} ${lastName.current?.value}`,
       title: titles.current?.value,
       location: locations.current?.value,
-      verified: verified,
+      verified: verify,
     } as Partial<Prof>;
     const response = await addProfile(email, userProfile);
     if (response?.error) return;
+    const updatedData = { ...user, ...userProfile };
+    localStorage.setItem("user", JSON.stringify(updatedData));
     setSuccess(true);
+    router.push("/dashboard");
   };
   return (
     <section className="scroll-child hover:bg-slate-500 bg-slate-500/50 w-[280px] md:w-[230px] md:h-[210px] flex flex-col gap-1 p-3 rounded-lg">
@@ -82,9 +92,9 @@ const Jobcard = ({
           </AlertDialogTrigger>
           <AlertDialogContent className="max-w-[400px] sm:w-[500px]">
             <AlertDialogHeader className=" relative">
-              <AlertDialogTitle>{title}</AlertDialogTitle>
+              <AlertDialogTitle>{verified == "true" && title}</AlertDialogTitle>
               <AlertDialogDescription>
-                {!callform ? (
+                {verified == "true" ? (
                   <>
                     <h1 className="font-bold underline text-2xl">
                       Job Description
@@ -128,9 +138,10 @@ const Jobcard = ({
                     </select>
                     <button
                       type="submit"
+                      disabled={success}
                       className="bg-black pl-2 py-2 rounded-md"
                     >
-                      Submit
+                      {!success ? "Submit" : "submitted"}
                     </button>
                   </form>
                 )}
@@ -140,7 +151,9 @@ const Jobcard = ({
               <AlertDialogCancel className="absolute top-0 right-2 sm:top-2 hover:border-red-700 border-solid border-2 px-2">
                 <X />
               </AlertDialogCancel>
-              {!callform && <AlertDialogAction>Apply</AlertDialogAction>}
+              {verified === "true" && (
+                <AlertDialogAction>Apply</AlertDialogAction>
+              )}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

@@ -4,8 +4,8 @@ import DashboardCard from "@/components/dashboard/dashboardCard";
 import { usePathname } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { profileHome, profileRecommedation } from "@/lib/queries";
-
 import clsx from "clsx";
+import useLocalStorage from "@/components/global/locals";
 
 type RecommendedProps = {
   id: string;
@@ -28,63 +28,71 @@ type HomeProps = {
 const Dashboardpage = () => {
   const paths = usePathname();
   const path = paths.split("dashboard")[1].split("/")[1];
-  const email = "jimitech@gmail.com";
   const [recommended, setRecommended] = useState<RecommendedProps>([]);
   const [home, setHome] = useState<HomeProps>([]);
-  const [myprofile] = useState({
-    name: "ahmed Najmudeen",
-    revenue: "3476",
-    bookings: "125",
+  const [profile] = useState({
     application: "85",
-    rating: "4.5",
   });
+  const [myprofile] = useLocalStorage("user");
 
   useMemo(async () => {
+    if (!myprofile?.email) return;
     if (path === "recommended") {
-      const jobs = await profileRecommedation(email, "true", "UX designer");
+      const jobs = await profileRecommedation(
+        myprofile.email,
+        "true",
+        "UX designer"
+      );
       if (jobs) setRecommended(jobs);
     }
     return;
-  }, [path]);
+  }, [path === "recommended"]);
   useMemo(async () => {
+    if (!myprofile?.email) return;
     if (path === "home") {
-      const jobs = await profileHome(email, "true", "ahmed najmudeen");
+      const jobs = await profileHome(
+        myprofile.email,
+        "true",
+        "ahmed najmudeen"
+      );
       if (jobs) setHome(jobs);
     }
     return;
-  }, [path]);
+  }, [path === "home"]);
   useMemo(async () => {
     if (path === "home") {
       console.log("profile");
     }
     return;
-  }, [path]);
+  }, [path === "home"]);
   return (
     <>
       {path === "home" && (
         <>
           <section className="p-4 max-w-[1090px] mx-auto">
-            <h1 className="font-bold text-3xl pt-6 pb-3 ">{myprofile.name}</h1>
+            <h1 className="font-bold text-3xl pt-6 pb-3 ">
+              {myprofile?.fullName}
+            </h1>
 
             <div className="grid grid-cols-1 cardgrid md:grid-cols-4 gap-3 justify-center px-2">
               <DashboardCard
                 title="Revenue"
-                heading={myprofile.revenue}
+                heading={myprofile?.revenue || ""}
                 increase="+10%"
               />
               <DashboardCard
                 title="Bookings"
-                heading={myprofile.bookings}
+                heading={myprofile?.booking || ""}
                 increase="+34"
               />
               <DashboardCard
                 title="Application"
-                heading={myprofile.application}
+                heading={profile.application}
                 increase="+28"
               />
               <DashboardCard
                 title="Ratings"
-                heading="4.5"
+                heading={myprofile?.rating || ""}
                 increase="Average Rating"
               />
             </div>

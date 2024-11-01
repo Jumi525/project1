@@ -22,8 +22,9 @@ import {
 } from "../ui/alert-dialog";
 import { v4 } from "uuid";
 import { addProfile, createjobs } from "@/lib/queries";
-import { jobprofile, Prof } from "@/lib/types";
+import { jobprofile, Profile } from "@/lib/types";
 import Loader from "./loader";
+import useLocalStorage from "./locals";
 
 const navlinks = [
   {
@@ -59,15 +60,14 @@ const navlinks = [
 ];
 
 const Aside = () => {
-  const email = "jumiklein525@gmail.com";
-  const user = "ahmed najmudeen";
+  const [myprofile, setMyProfile] = useLocalStorage("user");
   const jobTitle = useRef<HTMLSelectElement>(null);
   const jobPay = useRef<HTMLInputElement>(null);
   const jobLocation = useRef<HTMLInputElement>(null);
   const jobfulltime = useRef<HTMLSelectElement>(null);
   const jobDescrip = useRef<HTMLTextAreaElement>(null);
 
-  const profileTitle = useRef<HTMLInputElement>(null);
+  const profileTitle = useRef<HTMLSelectElement>(null);
   const profileFirstname = useRef<HTMLInputElement>(null);
   const profileLocation = useRef<HTMLInputElement>(null);
   const profileLastname = useRef<HTMLInputElement>(null);
@@ -84,7 +84,7 @@ const Aside = () => {
       price: jobPay.current?.value || "",
       time: jobfulltime.current?.value || "",
       title: jobTitle.current?.value || "",
-      name: user,
+      name: myprofile?.fullName || "",
     };
     await createjobs(verified, jobprofile);
     setLoading(false);
@@ -97,8 +97,12 @@ const Aside = () => {
       title: profileTitle.current?.value,
       location: profileLocation.current?.value,
       verified: "true",
-    } as Partial<Prof>;
-    const response = await addProfile(email, userProfile);
+    } as Partial<Profile>;
+    if (!myprofile?.email) return;
+    const response = await addProfile(myprofile.email, userProfile);
+    const updatedData = { ...myprofile, ...userProfile };
+    setMyProfile(updatedData);
+
     setLoading(false);
     if (response?.error) return;
   };
@@ -325,10 +329,17 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
 
                         <button
                           type="submit"
-                          className="w-full py-2 rounded-md bg-black"
+                          disabled={loading || !myprofile?.fullName}
+                          className="w-full py-2 rounded-md bg-black disabled:bg-black/40"
                         >
                           {loading ? <Loader /> : "Apply"}
                         </button>
+
+                        {!myprofile?.fullName && (
+                          <p className="text-sm text-red-400 w-full">
+                            SetUp your Profile before posting jobs
+                          </p>
+                        )}
                       </form>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
@@ -363,11 +374,16 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
                           ref={profileLastname}
                           className="w-full py-2 pl-2 rounded-md"
                         />
-                        <input
-                          placeholder="Title"
+                        <select
                           ref={profileTitle}
-                          className="w-full py-2 pl-2 rounded-md"
-                        />
+                          className="pl-2 py-2 rounded-md"
+                        >
+                          <option>Electrican</option>
+                          <option>Plumber</option>
+                          <option>Cleaner</option>
+                          <option>dry cleaner</option>
+                          <option>House Help</option>
+                        </select>
                         <input
                           placeholder="Location"
                           ref={profileLocation}
@@ -376,7 +392,8 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
 
                         <button
                           type="submit"
-                          className="w-full py-2 rounded-md bg-black"
+                          disabled={loading}
+                          className="w-full py-2 rounded-md bg-black disabled:bg-black/40"
                         >
                           {loading ? <Loader /> : "Apply settings"}
                         </button>

@@ -4,18 +4,21 @@ import React, { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
-import { FormSchema, Prof, SignUpFormSchema } from "@/lib/types";
+import { FormSchema, Profile, SignUpFormSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MailCheck } from "lucide-react";
 import { v4 } from "uuid";
 import { actionSignUpUser } from "@/lib/queries";
+import Loader from "@/components/global/loader";
+import useLocalStorage from "@/components/global/locals";
 
 const SignUppage = () => {
   const searchParams = useSearchParams();
   const [submitError, setSubmitError] = useState("");
   const [confirmation, setConfirmation] = useState(false);
+  const [value, setValue] = useLocalStorage("user");
 
   const codeExchangeError = useMemo(() => {
     if (!searchParams) return "";
@@ -36,7 +39,7 @@ const SignUppage = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof SignUpFormSchema>>({
     mode: "onChange",
     resolver: zodResolver(SignUpFormSchema),
@@ -58,7 +61,7 @@ const SignUppage = () => {
       verified: "false",
       updatedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
-    } as Prof;
+    } as Profile;
 
     const { error } = await actionSignUpUser(user);
     if (error) {
@@ -66,6 +69,7 @@ const SignUppage = () => {
       reset();
       return;
     }
+    setValue(user);
     setConfirmation(true);
   };
 
@@ -287,9 +291,10 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
       {submitError && <p className="text-sm text-red-400">{submitError}</p>}
       <button
         type="submit"
+        disabled={isSubmitting}
         className="bg-[#9A8499]/20 py-1 rounded-md hover:bg-[#9A8499]/50"
       >
-        Create Account
+        {isSubmitting ? <Loader /> : "Create Account"}
       </button>
       <p>
         Already have an account?{" "}

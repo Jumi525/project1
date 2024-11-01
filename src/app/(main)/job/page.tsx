@@ -31,9 +31,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
-import { useAppState } from "@/lib/provider/authProvider";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { profileJobs } from "@/lib/queries";
+import useLocalStorage from "@/components/global/locals";
 
 const navlinks = [
   {
@@ -69,27 +69,20 @@ type ProfileProps = {
 }[];
 
 const Jobpage = () => {
-  const [callForm, setCallForm] = useState(false);
-  const { state, email } = useAppState();
+  const [profile] = useLocalStorage("user");
   const paths = usePathname();
   const [profileJob, setprofileJobs] = useState<ProfileProps>([]);
-  const Email = "jimitech@gmail.com";
+  const router = useRouter();
 
   useMemo(async () => {
-    const userJob = await profileJobs(Email);
-    if (!userJob.length) return;
-    console.log(userJob);
+    if (!profile?.email) {
+      router.replace("/login");
+      return;
+    }
+    const userJob = await profileJobs(profile?.email || "");
     setprofileJobs(userJob);
   }, [paths.startsWith("/job")]);
 
-  useMemo(() => {
-    state.users.map((val) => {
-      if (val?.email === email)
-        if (val.verified === "true") return;
-        else setCallForm(true);
-      return;
-    });
-  }, [state]);
   return (
     <main className="gridmain bg-[#9A8499]/50">
       <section className="bg-[#052620] py-4 items-center gap-2 flex justify-between px-[16px] gridchild1">
@@ -329,8 +322,8 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
             price={val.price}
             time={val.time}
             title={val.title}
-            callform={callForm}
-            email={email}
+            email={profile?.email || ""}
+            verified={profile?.verified || "false"}
           />
         ))}
       </section>

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "fe90e8e5-68b8-47fd-816f-f2aff186b0dd",
+  "id": "ad488e1c-654e-4636-b812-7243b2c0c37d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "jobs": {
@@ -44,6 +44,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},

@@ -1,1 +1,0 @@
-ALTER TABLE "jobs" ADD COLUMN "name" text NOT NULL;

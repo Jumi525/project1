@@ -7,18 +7,16 @@ import * as z from "zod";
 import { FormSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { actionLoginUser } from "@/lib/queries";
-import { useAppState } from "@/lib/provider/authProvider";
+import Loader from "@/components/global/loader";
 
 const Loginpage = () => {
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const { dispatch, setEmail } = useAppState();
-
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof FormSchema>>({
     mode: "onChange",
     resolver: zodResolver(FormSchema),
@@ -28,15 +26,13 @@ const Loginpage = () => {
   const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (
     formData
   ) => {
-    const { data, error } = await actionLoginUser(formData);
+    const { error } = await actionLoginUser(formData);
     if (error) {
       reset();
       setSubmitError(error);
       return;
     }
     router.replace("/job");
-    setEmail(data?.email || "");
-    if (data) dispatch({ type: "ADD_USER", payload: data });
   };
 
   return (
@@ -241,9 +237,10 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
       {submitError && <p className="text-sm text-red-400">{submitError}</p>}
       <button
         type="submit"
+        disabled={isSubmitting}
         className="bg-[#9A8499]/20 py-1 rounded-md hover:bg-[#9A8499]/50"
       >
-        Login
+        {isSubmitting ? <Loader /> : "Login"}
       </button>
       <p>
         Dont have an account?{" "}

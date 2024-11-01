@@ -1,18 +1,21 @@
 "use server";
 import { jobs, profile } from "../../migrations/schema";
 import db from "./supabase/db";
-import { FormSchema, jobprofile, Prof } from "./types";
+import { FormSchema, jobprofile, Prof, Profile } from "./types";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
 
-export const actionSignUpUser = async (user: Prof) => {
-  console.log(user);
+export const actionSignUpUser = async (user: Profile) => {
   try {
+    const res = await db.query.profile.findFirst({
+      where: (p, { eq }) => eq(p.email, user.email),
+    });
+    if (res) return { data: res, error: "User Already Exist!" };
     await db.insert(profile).values(user);
     return { data: null, error: null };
   } catch (error) {
     console.log(error);
-    return { data: null, error: "signUpError" };
+    return { data: null, error: "SignUp Error" };
   }
 };
 
@@ -32,19 +35,16 @@ export const actionLoginUser = async ({
   }
 };
 
-// export const verifiedUser = async ({
-//   email,
-//   password,
-// }: z.infer<typeof FormSchema>) => {
+// export const verifiedUser = async (email: string) => {
 //   try {
 //     const data = await db.query.profile.findFirst({
-//       where: (p, { eq }) => and(eq(p.email, email), eq(p.password, password)),
+//       where: (p, { eq }) => eq(p.email, email),
 //     });
-//     if (data) return { data: null, error: null };
-//     return { data: null, error: "Please Sign up" };
+//     if (data) return { data: data, error: null };
+//     return { data: null, error: null };
 //   } catch (error) {
 //     console.log(error);
-//     return { data: null, error: `LoginError` };
+//     return { data: null, error: `verificationError` };
 //   }
 // };
 
