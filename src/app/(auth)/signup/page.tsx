@@ -20,6 +20,7 @@ const SignUppage = () => {
   const [confirmation, setConfirmation] = useState(false);
   const [value, setValue] = useLocalStorage("user");
 
+  console.log(value);
   const codeExchangeError = useMemo(() => {
     if (!searchParams) return "";
     return searchParams.get("error_description");

@@ -46,7 +46,7 @@ const Dashboardpage = () => {
       if (jobs) setRecommended(jobs);
     }
     return;
-  }, [path === "recommended"]);
+  }, [myprofile.email, path]);
   useMemo(async () => {
     if (!myprofile?.email) return;
     if (path === "home") {
@@ -58,13 +58,8 @@ const Dashboardpage = () => {
       if (jobs) setHome(jobs);
     }
     return;
-  }, [path === "home"]);
-  useMemo(async () => {
-    if (path === "home") {
-      console.log("profile");
-    }
-    return;
-  }, [path === "home"]);
+  }, [path, myprofile.email]);
+
   return (
     <>
       {path === "home" && (
