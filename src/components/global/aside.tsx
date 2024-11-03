@@ -88,6 +88,7 @@ const Aside = () => {
       time: jobfulltime.current?.value || "",
       title: jobTitle.current?.value || "",
       name: myprofile?.fullName || "",
+      description: jobDescrip.current?.value || "",
     };
     await createjobs(verified, jobprofile);
     setLoading(false);

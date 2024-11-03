@@ -13,3 +13,5 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default layout;
+
+// {"id":"17e48559-4f1c-4617-b977-47d47ddb8de6","location":"abuja","email":"testing@gmail.com","revenue":"","booking":"","feedback":"","rating":"","fullName":"testing ","password":"testing","title":"Electrican","verified":"true","updatedAt":"2024-11-02T02:25:35.318Z","createdAt":"2024-11-02T02:25:35.318Z"}

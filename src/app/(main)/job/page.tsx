@@ -34,6 +34,7 @@ import {
 import { PopoverClose } from "@radix-ui/react-popover";
 import { profileJobs } from "@/lib/queries";
 import { Profile } from "@/lib/types";
+import { usePathname } from "next/navigation";
 
 const navlinks = [
   {
@@ -66,15 +67,19 @@ type ProfileProps = {
   name: string;
   price: string;
   time: string;
+  description: string;
 }[];
 
 const Jobpage = () => {
   const [profile] = useLocalStorage<Profile | null>("user", null);
   const [profileJob, setprofileJobs] = useState<ProfileProps>([]);
+  const path = usePathname();
+
   useMemo(async () => {
     const userJob = await profileJobs();
+    console.log(userJob);
     setprofileJobs(userJob);
-  }, [profile]);
+  }, [path]);
 
   return (
     <main className="gridmain bg-[#9A8499]/50">
@@ -317,6 +322,7 @@ c-28 -50 -44 -59 -52 -28 -6 23 -25 22 -41 -4 -23 -37 47 -55 84 -22 10 9 30
             title={val.title}
             email={profile?.email || ""}
             verified={profile?.verified || "false"}
+            descript={val.description}
           />
         ))}
       </section>

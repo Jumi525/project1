@@ -3,7 +3,7 @@ import { jobs, profile } from "../../migrations/schema";
 import db from "./supabase/db";
 import { FormSchema, jobprofile, Prof, Profile } from "./types";
 import { z } from "zod";
-import { and, eq } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 
 export const actionSignUpUser = async (user: Profile) => {
   try {
@@ -34,19 +34,6 @@ export const actionLoginUser = async ({
     return { data: null, error: `LoginError` };
   }
 };
-
-// export const verifiedUser = async (email: string) => {
-//   try {
-//     const data = await db.query.profile.findFirst({
-//       where: (p, { eq }) => eq(p.email, email),
-//     });
-//     if (data) return { data: data, error: null };
-//     return { data: null, error: null };
-//   } catch (error) {
-//     console.log(error);
-//     return { data: null, error: `verificationError` };
-//   }
-// };
 
 export const addProfile = async (
   userEmail: string,
@@ -80,10 +67,14 @@ export const createjobs = async (verified: string, job: jobprofile) => {
 export const profileRecommedation = async (
   userEmail: string,
   verified: string,
-  title: string
+  title: string,
+  name: string
 ) => {
   if (!userEmail && verified === "false") return;
-  const response = await db.select().from(jobs).where(eq(jobs.title, title));
+  const response = await db
+    .select()
+    .from(jobs)
+    .where(and(not(eq(jobs.name, name)), eq(jobs.title, title)));
   if (!response.length) return [];
   return response;
 };

@@ -53,6 +53,7 @@ export type jobprofile = {
   time: string;
   title: string;
   name: string;
+  description: string;
 };
 
 export type Prof = {

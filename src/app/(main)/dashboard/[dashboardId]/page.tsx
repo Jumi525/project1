@@ -41,8 +41,9 @@ const Dashboardpage = () => {
     if (path === "recommended") {
       const jobs = await profileRecommedation(
         myprofile.email,
-        "true",
-        "UX designer"
+        myprofile.verified,
+        myprofile.title,
+        myprofile.fullName
       );
       if (jobs) setRecommended(jobs);
     }
@@ -53,8 +54,8 @@ const Dashboardpage = () => {
     if (path === "home") {
       const jobs = await profileHome(
         myprofile.email,
-        "true",
-        "ahmed najmudeen"
+        myprofile.verified,
+        myprofile.fullName
       );
       if (jobs) setHome(jobs);
     }

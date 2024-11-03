@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS "jobs" (
 	"title" text NOT NULL,
 	"time" text NOT NULL,
 	"date" timestamp with time zone DEFAULT now() NOT NULL,
-	"name" text NOT NULL
+	"name" text NOT NULL,
+	"description" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "profile" (

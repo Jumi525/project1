@@ -25,6 +25,7 @@ type JobcardProps = {
   time: string;
   email: string;
   verified: string;
+  descript: string;
 };
 
 const Jobcard = ({
@@ -36,6 +37,7 @@ const Jobcard = ({
   title,
   email,
   verified,
+  descript,
 }: JobcardProps) => {
   const firstName = useRef<HTMLInputElement>(null);
   const lastName = useRef<HTMLInputElement>(null);
@@ -72,7 +74,7 @@ const Jobcard = ({
         <span className="text-sm">/month</span>
       </p>
       <p className="font-bold ">
-        UI {title} - {applicant} applicant
+        {title} - {applicant} applicant
       </p>
       <p className="flex gap-2 opacity-80">
         <ArrowDownUp /> {location}, NG
@@ -96,17 +98,18 @@ const Jobcard = ({
               <AlertDialogDescription>
                 {verified == "true" ? (
                   <>
-                    <h1 className="font-bold underline text-2xl">
+                    <p className="font-bold underline text-2xl">
                       Job Description
-                    </h1>
+                    </p>
                     <p>Location: {location}</p>
                     <p>Date posted: {date}</p>
                     <p>
                       <span className="font-bold underline text-lg">
                         Description:
                       </span>{" "}
-                      This job requires a skill UI/UX designer to design the
-                      user interface of a website
+                      {descript
+                        ? descript
+                        : "This job requires a skill artisan"}
                     </p>
                   </>
                 ) : (

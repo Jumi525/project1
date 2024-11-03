@@ -28,4 +28,5 @@ export const jobs = pgTable("jobs", {
     .defaultNow()
     .notNull(),
   name: text("name").notNull(),
+  description: text("description").notNull(),
 });
