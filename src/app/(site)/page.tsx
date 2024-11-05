@@ -6,10 +6,10 @@ import Card from "@/components/global/card";
 import maryam from "../../../public/asset/tag7.png";
 import rahman from "../../../public/asset/tag8.png";
 import mmenyene from "../../../public/asset/tag9.png";
-import trainer from "../../../public/asset/about-banner (2).png";
-import dentist from "../../../public/asset/about-banner.png";
-import doctor from "../../../public/asset/doctor-1.png";
-import design from "../../../public/asset/recent-post-1.jpg";
+import trainer from "../../../public/asset/images (64).jpeg";
+import dentist from "../../../public/asset/images (65).jpeg";
+import doctor from "../../../public/asset/images (66).jpeg";
+import design from "../../../public/asset/solys-img-1.jpg";
 import Link from "next/link";
 import TeamCard from "@/components/landingPage/teamCard";
 
@@ -18,40 +18,41 @@ const Cardsdes = [
     image: maryam,
     heading: "maryam",
     descrip:
-      "I have been using this website for a while and they have never disappointted me",
+      "I have been using this website for a while and it has never disappointed me",
   },
   {
     image: rahman,
     heading: "Abdul rahman",
-    descrip: "Bringin the application to life",
+    descrip: "It makes finding jobs really easy and less stressfull. ",
   },
   {
     image: mmenyene,
     heading: "mmenyene",
-    descrip: "Designing the structure of the application",
+    descrip:
+      "i have been unemployed for several months, after being introduced to this website, i landed a job",
   },
 ];
 
 const Jobsdes = [
   {
     image: trainer,
-    heading: "Personal trainer",
-    descrip: "Writing the specification and road map",
+    heading: "Plumber",
+    descrip: "First hand Experienced plumber",
   },
   {
     image: dentist,
-    heading: "Dentist",
-    descrip: "Bringin the application to life",
+    heading: "Dry cleaner",
+    descrip: "Bringing out the beauty in worn out",
   },
   {
     image: doctor,
-    heading: "Medical Doctor",
-    descrip: "Designing the structure of the application",
+    heading: "house help",
+    descrip: "4+ years cleaners at your service",
   },
   {
     image: design,
-    heading: "UI/UX design",
-    descrip: "Designing the structure of the application",
+    heading: "Electrican",
+    descrip: "We have all categories of electrician",
   },
 ];
 
@@ -73,7 +74,7 @@ const LandingPage = () => {
             Its a big world out there, Go Explore
           </h1>
           <p className="opacity-65 py-2 max-w-[300px]">
-            we always make our customer happy by providing as many as choices as
+            We always make our customers happy by providing as many choices as
             possible
           </p>
           <button className="bg-[#9A845C] text-nowrap items-center p-1 pl-3 rounded-full flex gap-2 max-w-max">
@@ -91,9 +92,8 @@ const LandingPage = () => {
       <section className="py-8" id="jobs">
         <h2 className="text-center font-bold text-3xl md:text-4xl">Jobs</h2>
         <p className="mx-auto text-center max-w-[450px] mt-3 mb-5 opacity-55">
-          Use the section to look for your area of specialty and the product you
-          offer. You could also share and details and bonuses that comes with
-          the business
+          We have offer services to different area of specialty. We also share
+          details and bonuses that come with the jobs
         </p>
         <div className="flex items-center justify-center gap-4 md:gap-8 flex-wrap px-3">
           {Jobsdes.map((val, index) => (
@@ -108,12 +108,11 @@ const LandingPage = () => {
       </section>
       <section id="testimonial" className="py-8 px-4">
         <h2 className="text-center font-bold text-3xl md:text-4xl">
-          Testimonial
+          Testimonies
         </h2>
         <p className="mx-auto text-center max-w-[450px] mt-3 mb-5 opacity-55">
-          Use the section to describe your area of specialty and the product you
-          offer. You could share and details and bonuses that comes with the
-          business
+          Checkout our customers feedback on the unique craftmanship and
+          personal touch of every piece created which they have experienced
         </p>
         <div className="flex items-center gap-4 md:gap-8 px-3 verticalscroll mx-auto">
           {Cardsdes.map((val, index) => (
